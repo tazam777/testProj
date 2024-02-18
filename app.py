@@ -8,7 +8,11 @@ app = Flask(__name__)
 
 # Dummy database to store user information
 # Update the username and password here
-users = {'admin': 'password123'}
+users = {
+    'admin': 'password123',
+    'tarique': 'admin1',
+    'may': 'admin2'
+}
 
 # Login endpoint
 @app.route('/login', methods=['POST'])
@@ -16,10 +20,15 @@ def login():
     data = request.get_json()
     username = data['username']
     password = data['password']
+    
+    print(f"Received username: {username}")
+    print(f"Received password: {password}")
 
     if username in users and users[username] == password:
+        print("Authentication successful")
         return jsonify({'message': 'Login successful'})
     else:
+        print("Authentication failed")
         return jsonify({'message': 'Invalid credentials'}), 401
 
 # Root URL - Serve HTML login page
